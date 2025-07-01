@@ -2,10 +2,13 @@ import { AuthContext } from "../providers/AuthProvider";
 import Navbar from "./Shered/Navbar";
 import {Link} from "react-router-dom"
 import {useContext} from "react"
-
+import {useLocation,useNavigate} from "react-router-dom"
 
 const Login = () => {
-  const {signInUser} = useContext(AuthContext)
+  const {signInUser} = useContext(AuthContext);
+  const location = useLocation()
+  const navigate = useNavigate()
+  console.log("location in the login page", location)
     const handleLogin =(e)=>{
         e.preventDefault();
         console.log(e.currentTarget)
@@ -16,6 +19,9 @@ const Login = () => {
       signInUser(email,password)
       .then(result=>{
         console.log(result.user)
+
+        // navigate after login
+        navigate(location?.state ? location.state : "/")
       })
       .catch(error=>{
         console.error(error.message)
